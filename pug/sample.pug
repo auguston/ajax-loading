@@ -1,0 +1,51 @@
+extends template
+
+block config
+  - var pageTitle = 'Ajax loading 時的遮罩 jQuery Ajax override demo'
+  - var description = 'Ajax loading 時的遮罩 jQuery Ajax override demo. 用jQuery的監聽Ajax事件，自動載入loading遮罩效果。When using jQuery Ajax event, page will automatically trigger loading override.'
+  - var fburl = 'https://auguston.github.io/0-sample-github/'
+  - var fbImg = 'https://auguston.github.io/0-sample-github/contents/img/fb.jpg'
+  - var keywords = 'github, template, plugin'
+
+block main
+  style.
+    .block {
+      padding: 1rem;
+      min-height: calc(100vh - 124px - 48px);
+    }
+    .btn {
+      display: inline-block;
+      padding: .5rem 1rem;
+      background: #FFF;
+      border: 1px solid #CCC;
+      border-radius: .5rem;
+    }
+    .btn:hover {
+      background: #2196f3;
+      border-color: #2196f3;
+      text-decoration: none !important;
+      color: #FFF;
+    }
+  
+  section.block
+    p
+      a.btn#trigger-loading(href="#") show sample
+
+block js
+  script.
+    // 選擇哪一種樣式，有1-6種
+    var ALSetting = {
+      theme: 3
+    };
+  script(src="https://ibw.bwnet.com.tw/assets/library/ajax-loading/ajax-loading.min.js")
+  script.
+    $(function() {
+      $('#trigger-loading').on('click', function() {
+        $.ajax({
+          url: 'https://jsonplaceholder.typicode.com/albums',
+          success: function(data) {
+            console.log(data);
+          }
+        });
+      });
+    });

@@ -1,0 +1,141 @@
+extends template
+
+block config
+  - var pageTitle = 'Ajax loading 時的遮罩 jQuery Ajax override demo'
+  - var description = 'Ajax loading 時的遮罩 jQuery Ajax override demo. 用jQuery的監聽Ajax事件，自動載入loading遮罩效果。When using jQuery Ajax event, page will automatically trigger loading override.'
+  - var fburl = 'https://auguston.github.io/ajax-loading/'
+  - var fbImg = 'https://auguston.github.io/0-sample-github/contents/img/fb.jpg'
+  - var keywords = 'ajax, ajaxstart, ajaxstop, loadiing, plugin'
+
+block main
+  style.
+    .btn-group {
+      padding: 1rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 1rem;
+      background: #FFF;
+      border: 1px solid #CCC;
+      border-radius: .5rem;
+    }
+    .btn {
+      margin-right: 1rem;
+    }
+    .btn:hover {
+      background: #2196f3;
+      border-color: #2196f3;
+      text-decoration: none !important;
+      color: #FFF;
+    }
+
+    body.jq-loading-body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .jq-loading-fixed {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 99999;
+      background: #FFFFFF;
+    }
+    .jq-loading {
+      width: 100%;
+      height: 100%;
+      background: no-repeat center center;
+    }
+  
+  .chapter-title
+    h1 Ajax loading 時的遮罩
+    p 用jQuery的監聽Ajax事件，自動載入loading遮罩效果。
+    p When using jQuery's Ajax event, page will automatically trigger loading override.
+
+  .contents
+    h2 Step.1 引用js
+    .code-wrap
+      pre.prettyprint
+        code.language-js
+          | &lt;script>
+          |   var ALSetting = { theme: 1  }; // 先選擇哪一種樣式，有1-6種
+          | &lt;/script>
+          | &lt;script src="https://ibw.bwnet.com.tw/assets/library/ajax-loading/ajax-loading.min.js"></>
+    
+    h2 Step.2 …什麼？這樣就好了！？
+    p 對，這樣就好了。
+    p 不過要注意的是，為了讓ie也可以執行，所以loading的動畫是直接用gif圖檔的。
+    p 圖檔的背景是白色，因此loading時的整體背景也是白色。
+    
+    h2 Demo
+    p 以下是範例檔，主要是顯示1-6種樣式：
+    .btn-group
+      - for(var i = 1; i < 7; i++) {
+        a.btn(href="#", data-style=`${i}`) 樣式#{i}
+      - }
+
+block js
+  script.
+    let theme = 1;
+    let override;
+    function choose_theme(choose_theme) {
+      // 轉換樣式為圖檔路徑
+      switch(choose_theme) {
+        case 1:
+          return 'contents/img/theme1.gif';
+          break;
+        case 2:
+          return 'contents/img/theme2.gif';
+          break;
+        case 3:
+          return 'contents/img/theme3.gif';
+          break;
+        case 4:
+          return 'contents/img/theme4.gif';
+          break;
+        case 5:
+          return 'contents/img/theme5.gif';
+          break;
+        case 6:
+          return 'contents/img/theme6.gif';
+          break;
+        default:
+          return 'contents/img/theme1.gif';
+      }
+    };
+
+    $('.btn').each(function() {
+      $(this).on('click', function(e) {
+        e.preventDefault();
+        theme = choose_theme(Number(e.target.dataset.style));
+        override = `
+          <div class="jq-loading-fixed">
+            <div class="jq-loading" style="background-image: url(${theme})"></div>
+          </div>
+        `;
+        $.ajax({
+          url: 'https://jsonplaceholder.typicode.com/albums',
+          success: function(data) {}
+        });
+      })
+    });
+
+    // 監聽ajaxstart、ajaxstop
+    $(document).on({
+      ajaxStart() {
+        $('body').addClass('jq-loading-body').prepend(override);
+        $('.jq-loading-fixed').fadeIn(400);
+      },
+      ajaxStop() {
+        setTimeout(function(){
+          $('body').removeClass('jq-loading-body');
+          $('.jq-loading-fixed').fadeOut(400);
+        }, 3000);
+        setTimeout(function(){
+          $('.jq-loading-fixed').detach();
+        }, 3400);
+      }
+    });
