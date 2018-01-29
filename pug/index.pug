@@ -9,26 +9,6 @@ block config
 
 block main
   style.
-    .btn-group {
-      padding: 1rem;
-    }
-    .btn {
-      display: inline-block;
-      padding: 1rem;
-      background: #FFF;
-      border: 1px solid #CCC;
-      border-radius: .5rem;
-    }
-    .btn {
-      margin-right: 1rem;
-    }
-    .btn:hover {
-      background: #2196f3;
-      border-color: #2196f3;
-      text-decoration: none !important;
-      color: #FFF;
-    }
-
     body.jq-loading-body {
       width: 100%;
       height: 100%;
@@ -72,7 +52,7 @@ block main
     
     h2 Demo
     p 以下是範例檔，主要是顯示1-6種樣式：
-    .btn-group
+    .btn-wrap
       - for(var i = 1; i < 7; i++) {
         a.btn(href="#", data-style=`${i}`) 樣式#{i}
       - }
