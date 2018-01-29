@@ -70,17 +70,10 @@ function ajaxLoading(event) {
     <style>
   `);
 
-  // 遮罩html
-  const override = `
-    <div class="jq-loading-fixed">
-      <div class="jq-loading"></div>
-    </div>
-  `;
-
   // 監聽ajaxstart、ajaxstop
   $(document).on({
     ajaxStart() {
-      $('body').addClass('jq-loading-body').prepend(override);
+      $('body').addClass('jq-loading-body').prepend('<div class="jq-loading-fixed"><div class="jq-loading"></div></div>');
       $('.jq-loading-fixed').fadeIn(400);
     },
     ajaxStop() {
