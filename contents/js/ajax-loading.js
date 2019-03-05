@@ -18,7 +18,7 @@ function ajaxLoading(event) {
   };
 
   // 轉換樣式為圖檔路徑
-  let themeTran = () => {
+  var themeTran = function() {
     switch(event.theme) {
       case 1:
         return 'https://ibw.bwnet.com.tw/assets/library/ajax-loading/theme1.gif';
@@ -42,7 +42,7 @@ function ajaxLoading(event) {
         return 'https://ibw.bwnet.com.tw/assets/library/ajax-loading/theme1.gif';
     }
   }
-  let theme = themeTran();  
+  var theme = themeTran();  
 
   // 加入<style>
   $('head').append(`
@@ -60,28 +60,35 @@ function ajaxLoading(event) {
         bottom: 0;
         left: 0;
         z-index: 99999;
-        background: #FFFFFF;
+        background: rgba(255,255,255,0.5);
       }
       .jq-loading {
         width: 100%;
         height: 100%;
-        background: url(${theme}) no-repeat center center;
+        background: url('${theme}') no-repeat center center;
       }
     <style>
   `);
 
-  // 監聽ajaxstart、ajaxstop
+  // 監聽ajaxSend、ajaxStop
+  var ajaxWL = ['GetPrice']; // 不執行loading的url
+  var toggleLoading = true; // 是否執行loading，true執行、false不執行
   $(document).on({
-    ajaxStart() {
-      $('body').addClass('jq-loading-body').prepend('<div class="jq-loading-fixed"><div class="jq-loading"></div></div>');
-      $('.jq-loading-fixed').fadeIn(400);
+    ajaxSend: function(e,xhr,settings) {
+      Array.prototype.forEach.call(ajaxWL, function(wl) {
+        settings.url.indexOf(wl) > -1 ? toggleLoading = false : toggleLoading = true;
+      });
+      if(toggleLoading) {
+        $('body').addClass('jq-loading-body').prepend('<div class="jq-loading-fixed"><div class="jq-loading"></div></div>');
+        $('.jq-loading-fixed').fadeIn(400);
+      }
     },
-    ajaxStop() {
+    ajaxStop: function() {
       $('body').removeClass('jq-loading-body');
       $('.jq-loading-fixed').fadeOut(400);
       setTimeout(function(){
         $('.jq-loading-fixed').detach();
-      }, 800);
+      }, 600);
     }
   });
 };
