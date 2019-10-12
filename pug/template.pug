@@ -14,13 +14,13 @@ html
     meta(name="viewport", content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui")
 
     //- favicon
-    link(rel="shortcut icon", href="https://auguston.github.io/0-sample-github/contents/img/favicon.ico")
+    link(rel="shortcut icon", href="https://i0.wp.com/letswrite.tw/wp-content/uploads/2019/07/cropped-letswrite512-1.jpg")
 
     //- chrome網址列顏色
     meta(name="theme-color", content="#2a5298")
 
     //- safari網址列顏色
-    meta(name="apple-mobile-web-app-status-bar-style", content="#2a5298")
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
 
     //- 要額外引用的css，用block prepend 或 append link引用
     block link-tags
@@ -36,7 +36,7 @@ html
     = "\n"
 
     //- fb
-    meta(property="fb:app_id", content="484081328635964")
+    meta(property="fb:app_id", content="2435108729902508")
     meta(property="og:url", content=fburl)
     meta(property="og:type", content="website")
     meta(property="og:site_name", content=pageTitle)
@@ -72,6 +72,11 @@ html
     = "\n"
 
   body
+
+    // Google Tag Manager (noscript)
+    noscript
+      iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT", height="0", width="0", style="display:none;visibility:hidden")
+      
     .container
 
       //- nav

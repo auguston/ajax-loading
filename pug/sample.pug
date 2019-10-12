@@ -1,10 +1,10 @@
 extends template
 
 block config
-  - var pageTitle = 'Ajax loading 時的遮罩 jQuery Ajax override demo'
+  - var pageTitle = "Ajax loading 時的遮罩 jQuery Ajax override demo - Augustus - Let's Write"
   - var description = 'Ajax loading 時的遮罩 jQuery Ajax override demo. 用jQuery的監聽Ajax事件，自動載入loading遮罩效果。When using jQuery Ajax event, page will automatically trigger loading override.'
-  - var fburl = 'https://auguston.github.io/0-sample-github/'
-  - var fbImg = 'https://auguston.github.io/0-sample-github/contents/img/fb.jpg'
+  - var fburl = 'https://auguston.github.io/augurio-ajax-loading/'
+  - var fbImg = 'https://auguston.github.io/augurio-ajax-loading/contents/img/fb.jpg'
   - var keywords = 'github, template, plugin'
 
 block main
@@ -37,7 +37,7 @@ block js
     var ALSetting = {
       theme: 3
     };
-  script(src="https://auguston.github.io/ajax-loading/contents/js/ajax-loading.min.js")
+  script(src="https://auguston.github.io/augurio-ajax-loading/contents/js/ajax-loading.min.js")
   script.
     $(function() {
       $('#trigger-loading').on('click', function() {
